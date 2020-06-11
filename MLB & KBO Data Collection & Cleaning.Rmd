@@ -1,0 +1,168 @@
+---
+title: "Sister Teams Explorer Data Cleaning"
+output: html_notebook
+---
+
+# What is this?
+
+This is an R Markdown file which shows how I collected/calculated all of the data for the MLB and KBO teams in the sister teams explorer.  
+
+#setup libraries
+```{r}
+library(dplyr)
+library(sf)
+library(raster)
+```
+
+#load vector data
+
+```{r}
+
+#reading shapefiles downloaded from internet. Sources in readme
+USCities <- st_read("C:/Users/isaac/Desktop/GIS 3/500Cities_City_11082016/CityBoundaries.shp")
+toronto <- st_read("C:/Users/isaac/Desktop/GIS 3/toronto-boundary-wgs84/citygcs_regional_mun_wgs84.shp")
+koreaADM1 <- st_read("C:/Users/isaac/Desktop/GIS 3/KOR_adm/KOR_adm1.shp")
+koreaADM2 <- st_read("C:/Users/isaac/Desktop/GIS 3/KOR_adm/KOR_adm2.shp")
+
+#toronto was in a different CRS :(
+toronto <- st_transform(toronto, projection(USCities))
+
+
+#reading in attribute data from csv which I wrote myself. This includes basic information which I read off the internet (sources in readme) and copied by hand. Year founded (and standardized version), championships won (and standardized version), team name, and city name already here.
+mlbdata <- read.table("C:/Users/isaac/Desktop/GIS 3/mlbdata.csv", header = TRUE, sep = ",")
+kbodata <- read.table("C:/Users/isaac/Desktop/GIS 3/kbodata.csv", header = TRUE, sep = ",")
+```
+
+
+# Cleaning Data
+## Cleaning MLB Data
+
+```{r}
+#repeating the read table just in case
+mlbdata <- read.table("C:/Users/isaac/Desktop/GIS 3/mlbdata.csv", header = TRUE, sep = ",")
+
+#joining USCities attribute data to include geometry from US Cities based on City Name
+mlbdata <- mlbdata %>%
+  left_join(USCities, by = c("city_name" = "NAME"))
+
+# adding spatial and other fields for Toronto manually
+mlbdata$geometry[mlbdata$city_name == "Toronto"] <- toronto$geometry
+
+# these two fields (ST and POP2010) are never used again but R gets angry if Toronto doesn't have them. I added Toronto to my home state just for fun.
+mlbdata$ST[mlbdata$city_name == "Toronto"] <- "PA"
+mlbdata$POP2010[mlbdata$city_name == "Toronto"] <- 2615000
+
+# This removes a duplicate Kansas City Royals. They play in Kansas City, MO. But they are duplicated in Kansas City, KS by the join
+mlbdata <- filter(mlbdata, ST != "KS")
+
+# dropping unneeded rows. POP2010 kept as a sanity check to make sure raster subset is working later. (Toronto value ignored tho)
+mlbdata <- st_sf(dplyr::select(mlbdata, -c("CLASS", "ST", "STFIPS", "PLACEFIPS", "STPLFIPS")))
+
+#sanity check
+plot(mlbdata$geometry)
+```
+
+## Cleaning KBO Data
+
+```{r}
+
+#repeating read just to be sure
+kbodata <- read.table("C:/Users/isaac/Desktop/GIS 3/kbodata.csv", header = TRUE, sep = ",")
+
+#changing name of team name column. I don't know where the ï..team_name came from but I don't like it. 
+names(kbodata)[names(kbodata) == "ï..team_name"] <- "team_name"
+
+# kboadm1 is a subset of the kbo attribute data for cities which are their own first level administrative district (important for joining to shapefile). These cities have no governing body over them except the national one (they are like if a U.S. City was also a state, kind of like D.C.)
+kboadm1 <- filter(kbodata, 
+                  city_name == "Seoul" | 
+                  city_name == "Daejeon" |
+                  city_name == "Busan" |
+                  city_name == "Daegu" |
+                  city_name == "Incheon" |
+                  city_name == "Gwangju")
+
+# joining attribute data for 1st level cities to spatial boundaries for them and then selecting only those columns which I am interested in (KoreaADM1 has a lot of extra)
+kboadm1 <- kboadm1 %>%
+  left_join(koreaADM1, by = c("city_name" = "NAME_1")) %>%
+  dplyr::select(c("team_name", "city_name", "league", "num_champs", "year_founded", "yr_std", "chmp_std", "geometry"))
+
+# repeating the process above for second level administrative district cities (these are closer in governmental structure to our U.S. counties)
+kboadm2 <- filter(kbodata,
+                  city_name == "Changwon" |
+                  city_name == "Suwon")
+kboadm2 <- kboadm2 %>%
+  left_join(koreaADM2, by = c("city_name" = "NAME_2")) %>%
+  dplyr::select(c("team_name", "city_name", "league", "num_champs", "year_founded", "yr_std", "chmp_std", "geometry"))
+
+#joining the combined spatial and attribute data for both level 1 and level 2 administrative districts/teams back into one sf object representing all teams
+kbodata <- st_sf(rbind(kboadm1, kboadm2))
+
+#sanity check
+kbodata
+plot(kbodata$geometry)
+
+
+```
+
+# load raster data
+
+```{r}
+# here I'm reading three pretty massive rasters which I downloaded onto my computer (sources in readme). They are all in separate chunks because each takes a while to execute and I really didn't want to accidentally run all three at once
+gdp <- raster("C:/Users/isaac/Desktop/GIS 3/GDP_20200520050529_tiff/GDP.tif")
+```
+```{r}
+pop <- raster("C:/Users/isaac/Desktop/GIS 3/gpw-v4-population-count-rev11_2015_30_sec_tif/gpw_v4_population_count_rev11_2015_30_sec.tif")
+
+temp <- raster("C:/Users/isaac/Desktop/GIS 3/wc2.1_30s_bio_1.tif")
+```
+
+
+# extract raster data
+
+```{r}
+# This finds the average of all elements of x, while throwing out any NA values. This is important later because many US cities include some water within their boundary, often represented by an NA in the rasters loaded above, and averaged within certain areas below
+omitNAmean = function(x){
+  x %>%
+    na.omit() %>%
+    mean()
+}
+```
+
+
+```{r}
+
+#This calculates the totoal gdp, total population, and average annual mena temperature within each city in both data sets.
+
+kbodata$gdp <- as.integer(lapply(extract(gdp, kbodata), FUN = sum))
+mlbdata$gdp <- as.integer(lapply(extract(gdp, mlbdata), FUN = sum))
+
+kbodata$pop <- as.integer(lapply(extract(pop, kbodata), FUN = sum))
+mlbdata$pop <- as.integer(lapply(extract(pop, mlbdata), FUN = sum))
+
+kbodata$temp <- as.double(lapply(extract(temp, kbodata), FUN = mean))
+mlbdata$temp <- as.double(lapply(extract(temp, mlbdata), FUN = omitNAmean))
+
+#kbodata
+```
+# standardize raster data
+```{r}
+# this code adds standardized versions of the variables calculated above into the data set
+kbodata$gdp_std <- (kbodata$gdp - mean(kbodata$gdp)) / sd(kbodata$gdp)
+kbodata$pop_std <- (kbodata$pop - mean(kbodata$pop)) / sd(kbodata$pop)
+kbodata$tmp_std <- (kbodata$temp - mean(kbodata$temp)) / sd(kbodata$temp)
+
+mlbdata$gdp_std <- (mlbdata$gdp - mean(mlbdata$gdp)) / sd(mlbdata$gdp)
+mlbdata$pop_std <- (mlbdata$pop - mean(mlbdata$pop)) / sd(mlbdata$pop)
+mlbdata$tmp_std <- (mlbdata$temp - mean(mlbdata$temp)) / sd(mlbdata$temp)
+
+```
+
+```{r}
+# this writes the final data as a shapefile
+# heads up, the ESRI Shapefile driver changes the names of some of the variables slightly to make them shorter 
+st_write(kbodata, "C:/Users/isaac/Desktop/GIS 3/Sister-Teams-Explorer/data/kbodata.shp")
+st_write(mlbdata, "C:/Users/isaac/Desktop/GIS 3/Sister-Teams-Explorer/data/mlbdata.shp")
+
+```
+
+
