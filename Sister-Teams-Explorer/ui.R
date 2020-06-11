@@ -7,15 +7,20 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
-library(sf)
-library(leaflet)
+library(shiny)       #server - ui interaction, drawing
+library(sf)          #spatial data handling
+library(leaflet)     #drawing interactive map
+library(shinythemes) #lets me set the theme in ui, just for aesthetic
 
 
 
 
 # Define UI for the application
 shinyUI(fluidPage(
+    
+    #sets theme to united, feels kinda basebally to me
+    #sandstone is also kinda basebally but the links are light green :|
+    theme = shinytheme("united"),
 
     # Application title
     titlePanel("KBO Sister Teams Explorer for MLB Fans"),
