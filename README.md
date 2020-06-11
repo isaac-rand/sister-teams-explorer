@@ -20,14 +20,26 @@ The code here is for an RShiny app, hosted [here](https://isaacrand.shinyapps.io
 
 This project will rely on several data sources representing cities in three different countries: South Korea, the United States, and Canada. In an attempt to maintain consistency of measurement accuracy across cities and countries, the data about each city (population, GDP, temperature) will come from global rasters of that data. Those rasters will be spatially subset by the boundaries of each city in R, in order to get city level data. Administrative boundary data on South Korean Cities will come from the Database of Global Administrative Areas. The boundary data on US Cities comes from the US Center for Disease Control and Prevention. Finally, the boundary data for Toronto (the one Canadian city with representation in the MLB) comes from the city’s website. Data about each team’s history comes from sources individual to each league. 
 
+Information on the data used here (sources, spatial and temporal resolution, definition) is included below. Full sources are at the end of the readme.
+
+[Data on Teams Metadata]("/readme_imgs/sis_teams_data.png")
+
+[Data on Teams Dictionary]("/readme_imgs/sis_teams_data_dict.png")
+
+[Raster Data Metadata]("/readme_imgs/sis_rasts_data.png")
+
+
 ### Data Standardization
 
 Every comparison metric used here will be internally standardized within the leagues, for more meaningful results. This standardization converts the original data from both leagues to a new scale, where 0 is mean for the league, and all values represent how many standard deviations the original data was from the mean for the league. For more on standardization, click [here](https://www.statisticshowto.com/standardized-variables/#:~:text=In%20statistics%2C%20standardized%20variables%20are,were%20measured%20on%20different%20scales.). 
  
 The question which the app is designed to answer is "who is the mlb team x of the kbo?." So, instead of just comparing, for example, the year an MLB team was founded to the year a KBO team was founded, the standardization of the data means we are comparing how old an MLB team is for an MLB team to how old a KBO team is for a KBO team. This is important. The oldest KBO team was founded in 1982, whereas some MLB teams go all the way back to the late 1800s. If raw numbers were compared, even the oldest KBO teams would be most similar to relatively new MLB teams. By comparing standardized data, the teams which are oldest for the league they are in are the most similar. The same is principle is true for the other variables (the city's which have the highest/lowest/most average characteristics for the US are most similar to the city's in Korea which have the highest/lowest/most average characteristics).
 
-## Figures if Applicable
+## Current State of the Project
+
 
 ## Future Work?
 
 ## Authorship Details
+
+## Full Data Source Citations
