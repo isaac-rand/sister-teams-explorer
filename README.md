@@ -39,15 +39,15 @@ The question which the app is designed to answer is "who is the mlb team x of th
 
 The app as it stands [here](https://isaacrand.shinyapps.io/Sister-Teams-Explorer/) allows users to select one MLB team and one comparison criteria at a time and see what KBO teams are most similar to it using that criteria. The results are output as a table and as a map. The table shows all the KBO teams, their home city, and a field called `Difference`. `Difference` is the absolute value of the difference between the standardized value of the comparison criteria for the MLB team/city selected and the standardized value of the comparison criteria for each KBO team/city. The map output shows each team represented by a point which is shown by its team logo, as found [here](https://forums.ootpdevelopments.com/showthread.php?t=277508), and sized in inverse proportion to the team's `Difference`.
 
-![Here's what it looks like](readme_imgs/app-ex-1)
+![Here's what it looks like](readme_imgs/app-ex-1.png)
 
 When "All the Above" is chosen as the comparison criteria, the `Difference` field is equal to the sum of the `Difference` field  as calculated for all of the other comparison criteria.
 
-![Like this](readme_imgs/app-ex-2)
+![It looks like this](readme_imgs/app-ex-2.png)
 
 In addition, clicking on a team's icon launches a popup which allows you to navigate to wikipedia sites for the team or the team's city.
 
-![](readme_imgs/app-ex-3)
+![As shown here](readme_imgs/app-ex-3.png)
 
 ## Future Work?
 
