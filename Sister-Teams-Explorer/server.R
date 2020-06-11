@@ -49,7 +49,7 @@ shinyServer(function(input, output) {
     mlbNames <- as.list(mlbdata$team_nm)
     
     output$teamSelect <- renderUI({
-        selectInput("mlbteam", "Pick Your Favorite MLB Team:", (mlbNames)) 
+        selectInput("mlbteam", "Pick Your Favorite MLB Team:", (mlbNames), selected = "Arizona Diamondbacks") 
     })
     
 

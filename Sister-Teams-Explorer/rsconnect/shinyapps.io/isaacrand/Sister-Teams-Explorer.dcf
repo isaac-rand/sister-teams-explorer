@@ -5,8 +5,8 @@ account: isaacrand
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2439783
-bundleId: 3257853
+bundleId: 3258094
 url: https://isaacrand.shinyapps.io/Sister-Teams-Explorer/
-when: 1591893304.54512
+when: 1591897588.24955
 asMultiple: FALSE
 asStatic: FALSE

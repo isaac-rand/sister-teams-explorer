@@ -31,7 +31,8 @@ shinyUI(fluidPage(
                                     "Home City GDP",
                                     "Home City Average Annual Temperature",
                                     "Home City Population",
-                                    "All of the Above")
+                                    "All of the Above"),
+                        selected = "Number of Championships Won"
             ),
             tableOutput("table")
             
