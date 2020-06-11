@@ -1,0 +1,12 @@
+name: Sister-Teams-Explorer
+title: Sister-Teams-Explorer
+username:
+account: isaacrand
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2439783
+bundleId: 3257853
+url: https://isaacrand.shinyapps.io/Sister-Teams-Explorer/
+when: 1591893304.54512
+asMultiple: FALSE
+asStatic: FALSE
