@@ -55,7 +55,9 @@ There are a few paths this project could be expanded along. The first is that, i
 
 It could also be interesting to add more comparison criteria (like winning percentage maybe?) or a more meaningful way to combine comparison criteria than "All the Above." This could maybe take the form of some sliders allowing users to determine how much they want to weight specific criteria.
 
-Without adding any additional data, the app could also be improved by adding more links to learn about each team than their wikipedia sites. At present, the state of the english language information for KBO fans is not super broad. However, mykbostats.com provides updating english language information about the league daily. Their terms of use prevents access from web crawlers, but something similar could possibly be added to the app in the future.
+Without adding any additional data, the app could also be improved by adding more links to learn about each team than their wikipedia sites. At present, the state of the english language information for KBO fans is not super broad. However, mykbostats.com provides updating english language information about the league daily. Their terms of use prevents access from web crawlers, but something similar could possibly be added to the app in the future. 
+
+By way of aesthetic changes, three teams share Seoul South Korea in real life, and they are arbitrarily (and constantly) spaced out on the map. Optimally, they would be closer to each other when their icons are smaller, and farther away when they are larger. It would be nice to prevent overlap without making them seem farther away from each other than they are.
 
 ## Authorship Details
 
