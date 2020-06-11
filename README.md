@@ -39,13 +39,23 @@ The question which the app is designed to answer is "who is the mlb team x of th
 
 The app as it stands [here](https://isaacrand.shinyapps.io/Sister-Teams-Explorer/) allows users to select one MLB team and one comparison criteria at a time and see what KBO teams are most similar to it using that criteria. The results are output as a table and as a map. The table shows all the KBO teams, their home city, and a field called `Difference`. `Difference` is the absolute value of the difference between the standardized value of the comparison criteria for the MLB team/city selected and the standardized value of the comparison criteria for each KBO team/city. The map output shows each team represented by a point which is shown by its team logo, as found [here](https://forums.ootpdevelopments.com/showthread.php?t=277508), and sized in inverse proportion to the team's `Difference`.
 
+![Here's what it looks like](readme_imgs/app-ex-1)
+
 When "All the Above" is chosen as the comparison criteria, the `Difference` field is equal to the sum of the `Difference` field  as calculated for all of the other comparison criteria.
+
+![Like this](readme_imgs/app-ex-2)
+
+In addition, clicking on a team's icon launches a popup which allows you to navigate to wikipedia sites for the team or the team's city.
+
+![](readme_imgs/app-ex-3)
 
 ## Future Work?
 
 There are a few paths this project could be expanded along. The first is that, if there was interest among long time Korean fans (which I truly do not know if there is), a tab could be added which does the same thing but in reverse, allowing users to input a KBO team see what MLB teams are most similar. Additionally, if more data was collected, the same principles could be applied to other sports leagues around the world without too much changing around. There is not even any data collected here which is specific to baseball, so the same principle could theoretically allow you to compare MLB teams to team in the Dominican Winter League of baseball just as easily as the Premier League of Soccer.
 
 It could also be interesting to add more comparison criteria (like winning percentage maybe?) or a more meaningful way to combine comparison criteria than "All the Above." This could maybe take the form of some sliders allowing users to determine how much they want to weight specific criteria.
+
+Without adding any additional data, the app could also be improved by adding more links to learn about each team than their wikipedia sites. At present, the state of the english language information for KBO fans is not super broad. However, mykbostats.com provides updating english language information about the league daily. Their terms of use prevents access from web crawlers, but something similar could possibly be added to the app in the future.
 
 ## Authorship Details
 
