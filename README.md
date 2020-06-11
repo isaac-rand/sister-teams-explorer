@@ -54,3 +54,36 @@ This project was written as my final project for Geographic Information Sciences
 I am a second year in the college right now, working towards a degree in Geographical Sciences. I personally am a big believer that the NC Dinos should be America's KBO team, and am not so secretly devastated that my results did not confirm that they are the Chicago White Sox, Chicago Cubs, or Philadelphia Phillies of the KBO. I'm not letting that shake me though #WeAreNC. 
 
 ## Full Data Source Citations
+
+### Attribute Data
+MLB Team Age & Home City Name:
+Baseball Almanac. “Major League Baseball Team Histories.” Accessed May 20, 2020. [https://www.baseball-almanac.com/teammenu.shtml](https://www.baseball-almanac.com/teammenu.shtml).
+
+MLB Team Number of Championships:
+Major League Baseball. “World Series Overview.” Accessed May 20, 2020. [http://mlb.mlb.com/mlb/history/postseason/mlb_ws.jsp?feature=club_champs](http://mlb.mlb.com/mlb/history/postseason/mlb_ws.jsp?feature=club_champs).   
+
+KBO Team Age & Number of Championships & Home City Name:
+Tracy, Jeff. “Getting to Know the Korea Baseball Organization.” Axios, May 6, 2020. [https://www.axios.com/korea-baseball-organization-kbo-rules-teams-history-c3db7ddd-0d2b-44cf-a9b0-24bc9cfa6502.html]([https://www.axios.com/korea-baseball-organization-kbo-rules-teams-history-c3db7ddd-0d2b-44cf-a9b0-24bc9cfa6502.html)
+
+### Spatial Data
+
+#### Rasters
+Population:
+Center for International Earth Science Information Network - CIESIN - Columbia University. 2018. Gridded Population of the World, Version 4 (GPWv4): Population Count, Revision 11. Palisades, NY: NASA Socioeconomic Data and Applications Center (SEDAC). [https://doi.org/10.7927/H4JW8BX5](https://doi.org/10.7927/H4JW8BX5). Accessed May 20, 2020
+
+Annual Mean Temperature:
+WorldClim.org. “Hisotrical Climate Data,” 2020. [https://www.worldclim.org/data/worldclim21.html](https://www.worldclim.org/data/worldclim21.html).
+
+GDP:
+Peduzzi, Pascal. “Gross Demestic Product.” Global Risk Data Platform, June 28, 2012. [https://preview.grid.unep.ch/index.php?preview=data&events=socec&evcat=1&lang=eng](https://preview.grid.unep.ch/index.php?preview=data&events=socec&evcat=1&lang=eng).
+
+#### City Boundaries
+
+US Cities' Boundaries:
+Center for Disease Control and Prevention. “500 Cities: City Boundaries.” Data.gov, February 26, 2020. [https://catalog.data.gov/dataset/500-cities-city-boundaries-acd62](https://catalog.data.gov/dataset/500-cities-city-boundaries-acd62).
+
+Toronto's Boundaries:
+City of Toronto. (2012, August 31). Regional Municipal Boundary. City of Toronto Open Data Portal. https://open.toronto.ca/dataset/
+
+Korean Cities' Boundaries:
+GADM.org. “GADM Data,” 2018. [https://gadm.org/data.html](https://gadm.org/data.html).
