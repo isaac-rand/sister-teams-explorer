@@ -22,11 +22,11 @@ This project will rely on several data sources representing cities in three diff
 
 Information on the data used here (sources, spatial and temporal resolution, definition) is included below. Full sources are at the end of the readme.
 
-![Data on Teams Metadata]("readme_imgs/sis_teams_data.png")
+![Data on Teams Metadata](readme_imgs/sis_teams_data.png)
 
-![Data on Teams Dictionary]("readme_imgs/sis_teams_data_dict.png")
+![Data on Teams Dictionary](readme_imgs/sis_teams_data_dict.png)
 
-![Raster Data Metadata]("readme_imgs/sis_rasts_data.png")
+![Raster Data Metadata](readme_imgs/sis_rasts_data.png)
 
 
 ### Data Standardization
